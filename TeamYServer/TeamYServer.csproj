@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TeamYShared\TeamYShared.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    
+    <!-- Central server dist folder -->
+    <ServerDist>$(SolutionDir)_dist\server\</ServerDist>
+  </PropertyGroup>
+
+  <Target Name="CopyServerOutput" AfterTargets="Build">
+
+    <PropertyGroup>
+      <ServerBuildDir>$(ProjectDir)bin\$(Configuration)\net6.0\</ServerBuildDir>
+      <ServerDistDir>$(SolutionDir)_dist\server\</ServerDistDir>
+    </PropertyGroup>
+
+    <Message Text="Copying server files from $(ServerBuildDir) to $(ServerDistDir)" Importance="High" />
+
+    <MakeDir Directories="$(ServerDistDir)" />
+
+    <ItemGroup>
+      <ServerFiles Include="$(ServerBuildDir)**\*.*" />
+    </ItemGroup>
+
+    <Copy
+      SourceFiles="@(ServerFiles)"
+      DestinationFolder="$(ServerDistDir)"
+      SkipUnchangedFiles="true" />
+
+  </Target>
+
+
+</Project>

@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+
+    <AssemblyName>TeamYClient</AssemblyName>
+    <Description>TeamY Client Mod</Description>
+    <Version>1.0.0</Version>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!-- Reference shared protocol -->
+  <ItemGroup>
+    <ProjectReference Include="..\TeamYShared\TeamYShared.csproj" />
+  </ItemGroup>
+
+  <!-- BepInEx + Unity -->
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="5.6.0" IncludeAssets="compile" />
+    <PackageReference Include="Zeepkist.GameLibs" Version="17.32.1912" />
+    <PackageReference Include="ZeepSDK" Version="2.2.0" />
+  </ItemGroup>
+
+  <!-- Required for SDK-style net472 -->
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+
+ <Target Name="PackageClient" AfterTargets="Build">
+
+  <PropertyGroup>
+    <DistRoot>$(SolutionDir)_dist\client\</DistRoot>
+
+    <!-- CHANGE THIS to your real game path -->
+    <BepInExPlugins>
+      D:\SteamLibrary\steamapps\common\Zeepkist\BepInEx\plugins\
+    </BepInExPlugins>
+  </PropertyGroup>
+
+  <Message Text="Packaging TeamYClient to $(DistRoot)" Importance="High" />
+
+  <MakeDir Directories="$(DistRoot)" />
+  <MakeDir Directories="$(BepInExPlugins)" />
+
+  <!-- Client mod -->
+  <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DistRoot)" SkipUnchangedFiles="true" />
+
+  <!-- Shared net472 -->
+  <Copy SourceFiles="$(SolutionDir)TeamYShared\bin\$(Configuration)\net472\TeamYShared.dll" DestinationFolder="$(DistRoot)" SkipUnchangedFiles="true" />
+
+  <!-- Auto-install to BepInEx -->
+  <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExPlugins)" SkipUnchangedFiles="true" />
+
+  <Copy SourceFiles="$(SolutionDir)TeamYShared\bin\$(Configuration)\net472\TeamYShared.dll" DestinationFolder="$(BepInExPlugins)" SkipUnchangedFiles="true" />
+
+</Target>
+
+
+</Project>
