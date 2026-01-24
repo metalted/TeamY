@@ -19,7 +19,6 @@ namespace TeamYClient
             harmony.PatchAll();
 
             Logger.LogInfo("TeamY plugin loaded");
-            Logger.LogInfo(SharedTest.GetMessage());
         }
     }
 }

@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lidgren.Network" Version="1.0.2">
+      <NoWarn></NoWarn>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TeamYShared\TeamYShared.csproj" />
   </ItemGroup>
 
@@ -32,10 +38,7 @@
       <ServerFiles Include="$(ServerBuildDir)**\*.*" />
     </ItemGroup>
 
-    <Copy
-      SourceFiles="@(ServerFiles)"
-      DestinationFolder="$(ServerDistDir)"
-      SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ServerFiles)" DestinationFolder="$(ServerDistDir)" SkipUnchangedFiles="true" />
 
   </Target>
 

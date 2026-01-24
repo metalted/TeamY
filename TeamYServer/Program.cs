@@ -7,7 +7,6 @@ namespace TeamYServer
         static void Main(string[] args)
         {
             Console.WriteLine("TeamY Server starting...");
-            Console.WriteLine(SharedTest.GetMessage());
 
             int tick = 0;
 

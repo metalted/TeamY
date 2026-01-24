@@ -21,6 +21,7 @@
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
+    <PackageReference Include="Lidgren.Network" Version="1.0.2" />
     <PackageReference Include="UnityEngine.Modules" Version="5.6.0" IncludeAssets="compile" />
     <PackageReference Include="Zeepkist.GameLibs" Version="17.32.1912" />
     <PackageReference Include="ZeepSDK" Version="2.2.0" />
