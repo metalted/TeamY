@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamYShared
+namespace TeamYShared.Extensions
 {
     public static class StringExtensions
     {

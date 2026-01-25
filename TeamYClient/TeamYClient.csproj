@@ -11,6 +11,10 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <LidgrenXDll>..\libs\LidgrenX.Network.dll</LidgrenXDll>
+  </PropertyGroup>
+
   <!-- Reference shared protocol -->
   <ItemGroup>
     <ProjectReference Include="..\TeamYShared\TeamYShared.csproj" />
@@ -21,7 +25,6 @@
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
-    <PackageReference Include="Lidgren.Network" Version="1.0.2" />
     <PackageReference Include="UnityEngine.Modules" Version="5.6.0" IncludeAssets="compile" />
     <PackageReference Include="Zeepkist.GameLibs" Version="17.32.1912" />
     <PackageReference Include="ZeepSDK" Version="2.2.0" />
@@ -30,6 +33,11 @@
   <!-- Required for SDK-style net472 -->
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LidgrenX.Network">
+      <HintPath>..\libs\LidgrenX.Network.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
  <Target Name="PackageClient" AfterTargets="Build">
@@ -54,11 +62,15 @@
   <!-- Shared net472 -->
   <Copy SourceFiles="$(SolutionDir)TeamYShared\bin\$(Configuration)\net472\TeamYShared.dll" DestinationFolder="$(DistRoot)" SkipUnchangedFiles="true" />
 
+   <!-- LidgrenX -->
+   <Copy SourceFiles="$(LidgrenXDll)" DestinationFolder="$(DistRoot)" SkipUnchangedFiles="true" />
+
   <!-- Auto-install to BepInEx -->
   <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExPlugins)" SkipUnchangedFiles="true" />
 
   <Copy SourceFiles="$(SolutionDir)TeamYShared\bin\$(Configuration)\net472\TeamYShared.dll" DestinationFolder="$(BepInExPlugins)" SkipUnchangedFiles="true" />
 
+  <Copy SourceFiles="$(LidgrenXDll)" DestinationFolder="$(BepInExPlugins)" SkipUnchangedFiles="true" />
 </Target>
 
 

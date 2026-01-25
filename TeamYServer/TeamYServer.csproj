@@ -8,13 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lidgren.Network" Version="1.0.2">
-      <NoWarn></NoWarn>
-    </PackageReference>
+    <ProjectReference Include="..\TeamYShared\TeamYShared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamYShared\TeamYShared.csproj" />
+    <Reference Include="LidgrenX.Network">
+      <HintPath>..\libs\LidgrenX.Network.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup>

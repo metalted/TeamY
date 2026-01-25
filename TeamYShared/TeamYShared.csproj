@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lidgren.Network" Version="1.0.2" />
+    <Reference Include="LidgrenX.Network">
+      <HintPath>..\libs\LidgrenX.Network.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

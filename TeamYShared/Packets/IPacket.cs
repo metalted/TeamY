@@ -1,11 +1,11 @@
-﻿using Lidgren.Network;
+﻿using LidgrenX.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamYShared
+namespace TeamYShared.Packets
 {
     public interface IPacket
     {
