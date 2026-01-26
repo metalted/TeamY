@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace TeamYShared.Packets.Development
 {
+    /// <summary>
+    /// A very basic packet that only contains a string.
+    /// </summary>
     public struct StringPacket : IPacket
     {
         public string Data;

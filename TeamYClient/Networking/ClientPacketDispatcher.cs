@@ -19,7 +19,17 @@ namespace TeamYClient.Networking
 
         private void OnStringPacket(NetworkEndpoint endpoint, StringPacket packet, NetConnection conn)
         {
-            Debug.Log($"[CLIENT] Received StringPacket: {packet.Data}");
+            try
+            {
+                Debug.Log($"[CLIENT] Received StringPacket: {packet.Data}");
+            }
+            catch { }
+
+            try
+            {
+                Console.WriteLine($"[CLIENT] Received StringPacket: {packet.Data}");
+            }
+            catch { }            
         }
     }
 }

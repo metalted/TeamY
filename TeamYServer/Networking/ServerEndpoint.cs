@@ -41,6 +41,12 @@ namespace TeamYServer.Networking
             }
         }
 
+        /// <summary>
+        /// Send a packet to a single client.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="packet">The IPacket to send</param>
+        /// <param name="client">The client to send it to</param>
         public void Send<T>(T packet, NetConnection client) where T : struct, IPacket
         {
             if(client == null)
@@ -54,6 +60,11 @@ namespace TeamYServer.Networking
             client.SendMessage(om, NetDeliveryMethod.ReliableOrdered, 0);
         }
 
+        /// <summary>
+        /// Send a packet to all connected clients.
+        /// </summary>
+        /// <typeparam name="T">Struct of type IPacket</typeparam>
+        /// <param name="packet">The IPacket to send</param>
         public void Broadcast<T>(T packet) where T : struct, IPacket
         {
             if(_clients.Count == 0)

@@ -8,6 +8,9 @@ using TeamYShared.Packets;
 
 namespace TeamYShared.Networking
 {
+    /// <summary>
+    /// Holds the registered packets, and is used to pack and unpack network messages into their respective IPackets.
+    /// </summary>
     public static class PacketUtility
     {
         private static readonly Dictionary<ushort, Type> IdToType = new Dictionary<ushort, Type>();

@@ -5,6 +5,9 @@ using TeamYShared.Packets;
 
 namespace TeamYShared.Networking
 {
+    /// <summary>
+    /// PacketDispatcher contains a dictionary that links a packet type to an action. Its used to automatically call a function when a registered packet comes in. If the handler for that packet exists its called, otherwise its ignored.
+    /// </summary>
     public class PacketDispatcher
     {
         private readonly Dictionary<Type, Action<NetworkEndpoint, IPacket, NetConnection>> _handlers = new Dictionary<Type, Action<NetworkEndpoint, IPacket, NetConnection>>();

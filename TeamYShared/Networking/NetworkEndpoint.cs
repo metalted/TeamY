@@ -8,6 +8,9 @@ using TeamYShared.Packets;
 
 namespace TeamYShared.Networking
 {
+    /// <summary>
+    /// A basic wrapper around the LidgrenX network peer.
+    /// </summary>
     public abstract class NetworkEndpoint
     {
         protected PacketDispatcher Dispatcher;
@@ -18,6 +21,9 @@ namespace TeamYShared.Networking
             Dispatcher = dispatcher;
         }
 
+        /// <summary>
+        /// Check the buffer for new network messages.
+        /// </summary>
         public void Poll()
         {
             if (Peer == null)
@@ -45,6 +51,9 @@ namespace TeamYShared.Networking
             }
         }
 
+        /// <summary>
+        /// Handles an incoming data-type message, sends it to the dispatcher.
+        /// </summary>
         protected void HandleData(NetIncomingMessage im)
         {
             if (PacketUtility.TryUnpack(im, out IPacket packet))
@@ -53,6 +62,9 @@ namespace TeamYShared.Networking
             }
         }
 
+        /// <summary>
+        /// Handles an incoming status-type message, calls the overrideable OnStatusChanged()
+        /// </summary>
         protected void HandleStatus(NetIncomingMessage im)
         {
             var status = (NetConnectionStatus)im.ReadByte();
