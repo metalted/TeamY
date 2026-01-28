@@ -12,6 +12,7 @@ namespace TeamYClient.Networking
     public class ClientEndpoint : NetworkEndpoint
     {
         public NetConnection ServerConnection { get; private set; }
+        public bool IsConnected => ServerConnection != null;
 
         public ClientEndpoint(PacketDispatcher dispatcher, string appIdentifier) : base(dispatcher)
         {
