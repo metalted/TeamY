@@ -11,13 +11,15 @@ namespace TeamYClient.Game
         private GameModifier _modifier;
         private NetworkManagement _network;
         private UIManagement _ui;
+        private LocalPlayerTracker _tracker;
 
-        public GameObserver(GameData gameData, GameModifier modifier, NetworkManagement network, UIManagement ui)
+        public GameObserver(GameData gameData, GameModifier modifier, NetworkManagement network, UIManagement ui, LocalPlayerTracker tracker)
         {
             _data = gameData;
             _modifier = modifier;
             _network = network;
             _ui = ui;
+            _tracker = tracker;
         }
 
         #region Patch Entries
@@ -215,7 +217,7 @@ namespace TeamYClient.Game
                 return;
             }
 
-            //multiplayer.LocalPlayerMode = CharacterMode.Build; Shpleeble stuff
+            _tracker.SetMode(Shpleeble.CharacterMode.Build);
 
             _data.SetCurrentLEVCentral(instance);
             _modifier.SetupLocalPlayerTracking(instance.cam.cameraTransform);
@@ -256,7 +258,7 @@ namespace TeamYClient.Game
 
             _data.SetState(GameState.OnlineGame);
 
-            //multiplayer.LocalPlayerMode = CharacterMode.Race; Shpleeble stuff
+            _tracker.SetMode(Shpleeble.CharacterMode.Race);
         }
 
         public void OnLocalPlayersSpawned(GameMaster instance)
@@ -276,7 +278,8 @@ namespace TeamYClient.Game
                 return;
             }
 
-            //multiplayer.LocalPlayerMode = state == 3 ? (CharacterMode)2 : (CharacterMode)1; Shpleeble stuff.
+            //This needs updating to decide which is which.
+            //_tracker.SetMode(Shpleeble.CharacterMode.Build);
         }
 
         public bool OnEnteredTestMap(LEV_TestMap instance)

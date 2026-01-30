@@ -18,9 +18,9 @@ namespace TeamYClient.Game
 
         public void SetupLocalPlayerTracking(Transform target)
         {
-            if (target.gameObject.GetComponent<LocalPlayerTracker>() == null)
+            if (target.gameObject.GetComponent<LocalPlayerTransformTracker>() == null)
             {
-                target.gameObject.AddComponent<LocalPlayerTracker>();
+                target.gameObject.AddComponent<LocalPlayerTransformTracker>();
             }
         }
 

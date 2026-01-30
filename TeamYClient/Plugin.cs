@@ -27,9 +27,9 @@ namespace TeamYClient
         public GameData GameData { get; private set; }
         public GameModifier GameModifier { get; private set; }
         public GameObserver GameObserver { get; private set; }
+        public LocalPlayerTracker LocalPlayerTracker { get; private set; }
         public NetworkManagement NetworkManagement { get; private set; }
         public UIManagement UIManagement { get; private set; }
-
         public SelectionObserver SelectionObserver { get; set; }
 
         public void Awake()
@@ -40,8 +40,9 @@ namespace TeamYClient
             GameModifier = new GameModifier(GameData);            
             NetworkManagement = new NetworkManagement(GameData);
             UIManagement = new UIManagement();
+            LocalPlayerTracker = new LocalPlayerTracker();
 
-            GameObserver = new GameObserver(GameData, GameModifier, NetworkManagement, UIManagement);
+            GameObserver = new GameObserver(GameData, GameModifier, NetworkManagement, UIManagement, LocalPlayerTracker);            
 
             Harmony harmony = new Harmony(PluginInfo.PLUGIN_GUID);
             harmony.PatchAll();
