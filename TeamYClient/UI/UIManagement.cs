@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Crosstales.BWF.Manager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ZeepSDK.LevelEditor;
+using ZeepSDK.UI;
 
 namespace TeamYClient.UI
 {
@@ -18,6 +21,84 @@ namespace TeamYClient.UI
         public static Color darkestGreen = new Color(0, 0.348f, 0.238f, 1f);
         public static Color grey = new Color(0.3f, 0.3f, 0.3f, 1f);
         public static Color darkgrey = new Color(0.2f, 0.2f, 0.2f, 1f);
+
+        private TeamToolbarDrawer teamToolbarDrawer;
+        private TeamGUIDrawer teamGUIDrawer;
+
+        public bool AdminWindowIsOpen;
+        public bool ChatWindowIsOpen;
+        private int _mouseBlockRequests = 0;
+        private bool _mouseIsBlocked = false;
+        private readonly object _lock = new object();
+
+        public void Initialize()
+        {
+            teamToolbarDrawer = new TeamToolbarDrawer(this);
+            UIApi.AddToolbarDrawer(teamToolbarDrawer);
+            teamGUIDrawer = new TeamGUIDrawer(this);
+            UIApi.AddZeepGUIDrawer(teamGUIDrawer);
+        }
+
+        public void OnDestroy()
+        {
+            UIApi.RemoveToolbarDrawer(teamToolbarDrawer);
+            UIApi.RemoveZeepGUIDrawer(teamGUIDrawer);
+        }
+
+        public void OpenAdminWindow()
+        {
+            AdminWindowIsOpen = true;
+        }
+
+        public void OpenChatWindow()
+        {
+            ChatWindowIsOpen = true;
+        }
+
+        public void CloseAdminWindow()
+        {
+            AdminWindowIsOpen = false;
+            ReleaseMouseBlock();
+        }
+
+        public void CloseChatWindow()
+        {
+            ChatWindowIsOpen = false;
+            ReleaseMouseBlock();
+        }
+
+        public void MouseEnteredWindowRect()
+        {
+            _mouseBlockRequests++;
+
+            if (!_mouseIsBlocked)
+            {
+                LevelEditorApi.BlockMouseInput(_lock);
+                _mouseIsBlocked = true;
+            }
+        }
+
+        public void MouseExitedWindowRect()
+        {
+            ReleaseMouseBlock();
+        }
+
+        public void ReleaseMouseBlock()
+        {
+            if (_mouseBlockRequests <= 0)
+            {
+                _mouseBlockRequests = 0;
+                return;
+            }
+
+            _mouseBlockRequests--;
+
+            if (_mouseBlockRequests == 0 && _mouseIsBlocked)
+            {
+                LevelEditorApi.UnblockMouseInput(_lock);
+                _mouseIsBlocked = false;
+            }
+        }
 
         public void CreateMainMenuUI()
         {
@@ -94,6 +175,10 @@ namespace TeamYClient.UI
         {
             try
             {
+                PlayerManager.Instance.weLoadedLevelEditorFromMainMenu = true;
+                Plugin.Instance.GameData.SetState(Game.GameState.EnteringOnlineEditorFromMainMenu);
+                Plugin.Instance.GameModifier.LoadEditorScene();
+
                 //Plugin.Instance.client.AttemptToConnectToServer();
                 //PlayerManager.Instance.weLoadedLevelEditorFromMainMenu = true;
             }

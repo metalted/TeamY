@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TeamYClient.Game;
 using TeamYClient.Networking;
+using TeamYClient.Permissions;
+using TeamYShared.Permissions;
 using TeamYClient.UI;
 using TeamYShared;
 using TeamYShared.Networking;
@@ -20,6 +22,7 @@ using TeamYShared.Packets.Development;
 
 namespace TeamYClient
 {
+    [BepInDependency("ZeepSDK")]
     [BepInPlugin("com.metalted.zeepkist.teamy", "TeamYClient", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
@@ -31,10 +34,17 @@ namespace TeamYClient
         public NetworkManagement NetworkManagement { get; private set; }
         public UIManagement UIManagement { get; private set; }
         public SelectionObserver SelectionObserver { get; set; }
+        public ClientPermissionState Permissions { get; private set; }
+        public UIManagement UI { get; private set; }
 
         public void Awake()
         {
             Instance = this;
+
+            Permissions = new ClientPermissionState();
+
+            //Dev purposes, need to apply a group at some point as network is not doing it.
+            Permissions.ApplyGroup(new PermissionGroup());
 
             GameData = new GameData();
             GameModifier = new GameModifier(GameData);            
@@ -42,12 +52,20 @@ namespace TeamYClient
             UIManagement = new UIManagement();
             LocalPlayerTracker = new LocalPlayerTracker();
 
-            GameObserver = new GameObserver(GameData, GameModifier, NetworkManagement, UIManagement, LocalPlayerTracker);            
+            GameObserver = new GameObserver(GameData, GameModifier, NetworkManagement, UIManagement, LocalPlayerTracker, Permissions);            
+
+            UI = new UIManagement();
+            UI.Initialize();
 
             Harmony harmony = new Harmony(PluginInfo.PLUGIN_GUID);
             harmony.PatchAll();
 
             Logger.LogInfo("TeamY plugin loaded");
-        }        
+        }   
+        
+        public void OnDestroy()
+        {
+            UI.OnDestroy();
+        }
     }
 }

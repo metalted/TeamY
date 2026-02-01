@@ -18,10 +18,11 @@ namespace TeamYClient.Game
     public class GameData
     {
         private bool _init = false;
-        public ulong SteamID { get; private set; }
         public GameState State { get; private set; }
-        public int BlockCount { get; private set; }
-        public LEV_LevelEditorCentral LEV_Central { get; private set; }
+        
+        public LEV_LevelEditorCentral LEV_Central { get; set; }
+        public EditorData Editor { get; private set; }
+        public LocalData Local { get; private set; }
 
         public void Initialize()
         {
@@ -30,7 +31,16 @@ namespace TeamYClient.Game
                 return;
             }
 
-            SteamID = PlayerManager.Instance.steamAchiever.GetPlayerSteamID();
+            Editor = new EditorData();
+            Local = new LocalData();
+            Local.SteamID = PlayerManager.Instance.steamAchiever.GetPlayerSteamID();
+
+            Plugin.Instance.LocalPlayerTracker.OnSnapshot += (snapshot) =>
+            {
+                Local.Position = snapshot.Position;
+                Local.EulerRotation = snapshot.EulerRotation;
+                Local.Mode = snapshot.Mode;
+            };
 
             _init = true;
         }

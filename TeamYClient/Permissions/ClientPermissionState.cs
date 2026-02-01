@@ -4,22 +4,15 @@ namespace TeamYClient.Permissions
 {
     public class ClientPermissionState
     {
-        public PermissionProfile Profile { get; private set; }
-        private readonly PermissionManager manager;
+        public PermissionGroup Group { get; private set; }
 
-        public ClientPermissionState(PermissionRegistry registry)
+        public void ApplyGroup(PermissionGroup group)
         {
-            manager = new PermissionManager(registry);
+            Group = group;
         }
 
-        public void ApplyProfile(PermissionProfile profile)
-        {
-            Profile = profile;
-            //manager.SetProfile(profile);
-        }
+        public bool Has(string permission) => PermissionEvaluator.Has(Group, permission);
 
-        //public bool Has(string permission) => manager.Has(permission);
-
-        //public int GetLimit(string key) => manager.GetLimit(key);
+        public int GetLimit(string key, int defaultValue = 0) => PermissionEvaluator.GetLimit(Group, key, defaultValue);
     }
 }

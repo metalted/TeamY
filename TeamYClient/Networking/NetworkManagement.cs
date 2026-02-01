@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeamYClient.Game;
 using TeamYShared.Networking;
+using UnityEngine;
 
 namespace TeamYClient.Networking
 {
@@ -57,6 +58,41 @@ namespace TeamYClient.Networking
             }
 
             //ClearAllOnlineDataAndAnythingOnlineRelated() (Users , chat , EditorStateData etc)
+        }
+
+        public void SendBlockCreate(ulong steamID, string blockJSONAfter)
+        {
+            Debug.Log($"{steamID} | Create | {blockJSONAfter}");
+        }
+
+        public void SendBlockUpdate(ulong steamID, string blockJSONAfter)
+        {
+            Debug.Log($"{steamID} | Update | {blockJSONAfter}");
+        }
+
+        public void SendBlockDestroy(ulong steamID, string blockJSONBefore)
+        {
+            Debug.Log($"{steamID} | Destroy | {blockJSONBefore}");
+        }
+
+        public void SendFloorUpdate(ulong steamID, int floorAfter)
+        {
+            Debug.Log($"{steamID} | Floor | {floorAfter}");
+        }
+
+        public void SendSkyboxUpdate(ulong steamID, string skyboxJSONAfter)
+        {
+            Debug.Log($"{steamID} | Skybox | {skyboxJSONAfter}");
+        }
+
+        public void SendSelection(ulong steamID, string blockUID)
+        {
+            Debug.Log($"{steamID} | Selection | {blockUID}");
+        }
+
+        public void SendDeselection(ulong steamID, string blockUID)
+        {
+            Debug.Log($"{steamID} | Deselection | {blockUID}");
         }
     }
 }
